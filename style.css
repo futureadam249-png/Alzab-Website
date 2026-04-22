@@ -1650,6 +1650,34 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
   }
   .av-card p { padding: 0 !important; font-size: 0.9rem !important; line-height: 1.4; }
 
+  /* Contact Section Refinement */
+  .ct-grid { gap: 2.5rem !important; }
+  .section-title { font-size: 2.3rem !important; }
+  
+  /* Contact Side Card Refinement ("Looks too big" Fix) */
+  .ct-side-card { 
+    padding: 2rem 1.5rem !important; 
+    border-radius: 24px !important; 
+    max-width: 100% !important;
+  }
+  .ct-card-logo { 
+    height: 70px !important; 
+    margin-bottom: 1rem !important; 
+  }
+  .ct-card-name { 
+    font-size: 1.6rem !important; 
+    margin-bottom: 0.4rem !important; 
+  }
+  .ct-card-tagline { 
+    font-size: 0.75rem !important; 
+    margin-bottom: 2rem !important; 
+    letter-spacing: 0.15em !important; 
+  }
+  .ct-card-divider { margin-bottom: 2rem !important; }
+  .card-info-row { gap: 1rem !important; margin-bottom: 1rem !important; flex-direction: column; align-items: center; }
+  .card-info-row .label { width: auto !important; text-align: center !important; margin-bottom: 0.2rem; }
+  .final-info-item .value, .card-link-value { font-size: 1.1rem !important; }
+  
   /* Footer Refinement */
   .footer-grid { text-align: center; gap: 3rem; }
   .footer-logo { align-items: center; }
