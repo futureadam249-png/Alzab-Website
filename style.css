@@ -1489,8 +1489,8 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
 }
 
 .badge-logo {
-  width: 75px;
-  height: 75px;
+  width: 95px;
+  height: 95px;
   object-fit: contain;
   filter: drop-shadow(0 0 15px rgba(197,160,89,0.5));
 }
