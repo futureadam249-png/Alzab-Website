@@ -1,0 +1,14 @@
+# Logs
+*.log
+
+# Scripts
+*.py
+scratch/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
