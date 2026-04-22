@@ -1678,8 +1678,14 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
   .card-info-row .label { width: auto !important; text-align: center !important; margin-bottom: 0.2rem; }
   .final-info-item .value, .card-link-value { font-size: 1.1rem !important; }
   
-  /* Footer Refinement */
-  .footer-grid { text-align: center; gap: 3rem; }
+  /* Footer Refinement (Fixing oversized gaps & fonts) */
+  .footer { padding: 3rem 0 2rem !important; }
+  .footer-logo { height: 75px !important; margin-bottom: 1.5rem !important; }
+  .footer-grid { text-align: center; gap: 2rem !important; }
+  .footer h4 { font-size: 1.2rem !important; margin-bottom: 1rem !important; }
+  .footer p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+  .footer ul li a { margin-bottom: 0.5rem !important; font-size: 0.95rem !important; }
+  .footer-bottom { padding-top: 2rem !important; margin-top: 1.5rem; }
   .footer-logo { align-items: center; }
   .footer-links ul { align-items: center; }
   .footer-contact { align-items: center; }
