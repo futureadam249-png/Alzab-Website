@@ -298,18 +298,19 @@ const statsObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const statNums = entry.target.querySelectorAll('.stat-num');
-      const targets = [35, 500, 50];
-      const suffixes = ['+', '+', '+'];
-      statNums.forEach((el, i) => {
-        animateCounter(el, targets[i], suffixes[i]);
+      statNums.forEach(el => {
+        const targetValue = parseInt(el.getAttribute('data-target')) || 0;
+        animateCounter(el, targetValue, '+');
       });
       statsObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.5 });
+}, { threshold: 0.3 });
 
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) statsObserver.observe(heroStats);
+// Observe all triggers (Hero and About sections)
+document.querySelectorAll('.hero-stats, .stats-trigger').forEach(trigger => {
+  statsObserver.observe(trigger);
+});
 
 /* ══════════════════════════════
    LOGO STAMP ANIMATION

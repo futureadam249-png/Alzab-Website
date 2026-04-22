@@ -1415,3 +1415,148 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
 }
 
 
+
+
+/* HERITAGE VISUAL ENHANCEMENT */
+.heritage-visual {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1500px;
+}
+
+.heritage-visual-backdrop {
+  position: absolute;
+  inset: 0;
+  background: url('assets/images/heritage_visual.png') center/cover no-repeat;
+  border-radius: 40px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+  overflow: hidden;
+  border: 1px solid rgba(197,160,89,0.2);
+}
+
+.heritage-visual-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(6,46,18,0.7) 0%, transparent 100%);
+}
+
+/* Rotating Badge */
+.heritage-badge {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float-badge 6s ease-in-out infinite;
+}
+
+.badge-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(197,160,89,0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(197,160,89,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: rotate-badge 20s linear infinite;
+}
+
+.badge-text svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--gold-primary);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.badge-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(197,160,89,0.5));
+}
+
+/* Floating Stats Cards */
+.heritage-stats-floating {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stat-mini-card {
+  position: absolute;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 15;
+  transition: transform 0.3s ease;
+  pointer-events: auto;
+}
+
+.stat-mini-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: var(--gold-primary);
+}
+
+.stat-mini-card .stat-num {
+  font-size: 2.2rem;
+  margin: 0;
+}
+
+.stat-mini-card .stat-label {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.card-1 { bottom: 40px; left: -60px; animation: float-card 7s ease-in-out infinite; }
+.card-2 { top: 60px; left: -40px; animation: float-card 8s ease-in-out infinite reverse; }
+
+@keyframes rotate-badge {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float-badge {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+@keyframes float-card {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@media (max-width: 1200px) {
+  .heritage-grid { gap: 4rem; }
+  .card-1, .card-2 { left: 0; }
+  .heritage-badge { top: 0; right: 0; width: 140px; height: 140px; }
+}
+
+@media (max-width: 1024px) {
+  .heritage-visual { height: 400px; margin-top: 4rem; }
+  .heritage-grid { grid-template-columns: 1fr; text-align: center; }
+}
