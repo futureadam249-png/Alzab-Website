@@ -1689,4 +1689,31 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
   .footer-logo { align-items: center; }
   .footer-links ul { align-items: center; }
   .footer-contact { align-items: center; }
-}
+
+  /* Services Page Mobile Polish */
+  .svc-cards-section { padding: 3rem 0 !important; }
+  .svc-grid-5 { gap: 1.5rem !important; }
+  .svc-card { 
+    padding: 2.5rem 1.5rem !important; 
+    min-height: auto !important; 
+    border-radius: 12px !important;
+  }
+  .svc-card-icon { height: 60px !important; width: 60px !important; margin-bottom: 2rem !important; }
+  .svc-card .hero-title { font-size: 2.2rem !important; margin-bottom: 1.5rem !important; }
+  .svc-card-list li { font-size: 0.95rem !important; margin-bottom: 0.8rem !important; }
+
+  /* Contact Page Mobile Polish */
+  .offices-grid { gap: 1.5rem !important; margin-top: 2rem !important; }
+  .office-card {
+    padding: 2.5rem 1.5rem !important;
+    gap: 1.8rem !important;
+    min-height: auto !important;
+    border-radius: 16px !important;
+  }
+  .office-watermark { font-size: 5rem !important; top: -10px !important; right: -10px !important; left: auto !important; }
+  [dir="rtl"] .office-watermark { right: auto !important; left: -10px !important; }
+  .office-location-icon { width: 50px !important; height: 50px !important; }
+  .office-card h4 { font-size: 1.5rem !important; }
+
+  /* Mobile Nav Fix */
+  .nav-links { -webkit-backdrop-filter: blur(15px); background: rgb(6, 46, 18) !important; }}
