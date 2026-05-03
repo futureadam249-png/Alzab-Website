@@ -1855,11 +1855,13 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
     display: none !important;
   }
   .ai-buddy-float-pill {
-    right: 20px; /* Aligned with WhatsApp mobile */
-    bottom: 95px; /* Above WhatsApp (25px bottom + 55px height + 15px gap) */
-    height: 55px;
-    padding: 0 20px;
-    font-size: 0.8rem;
+    right: 20px;
+    bottom: 90px;
+    height: 42px;
+    padding: 0 15px;
+  }
+  .ai-buddy-float-pill span {
+    font-size: 0.75rem;
   }
 }
 
