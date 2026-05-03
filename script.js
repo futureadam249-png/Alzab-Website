@@ -15,11 +15,108 @@ document.addEventListener('DOMContentLoaded', () => {
   updatePlaceholders();
   initContactForm();
   initFileInput();
+  initWhatsApp();
+  initAIBuddy();
 });
 
 /* ══════════════════════════════
+   AI BUDDY / TECHNICAL ASSISTANT
+══════════════════════════════ */
+function initAIBuddy() {
+  if (document.querySelector('.ai-buddy-float-pill')) return;
+
+  const path = window.location.pathname;
+  // Exclude individual brand pages, but keep it on products.html
+  if (path.includes('/brands/')) return;
+
+
+  // 1. Create the Float Trigger (Pill Shaped)
+  const aiBtn = document.createElement('div');
+  aiBtn.className = 'ai-buddy-float-pill';
+  aiBtn.setAttribute('role', 'button');
+  aiBtn.setAttribute('aria-label', 'Open Technical Assistant');
+  
+  const labelText = currentLang === 'ar' ? 'المساعد الفني' : 'Technical Assistant';
+  aiBtn.innerHTML = `<span>${labelText}</span>`;
+
+  // 2. Create the Chat Window
+  const chatWindow = document.createElement('div');
+  chatWindow.className = 'ai-chat-window';
+  
+  const welcomeMsg = currentLang === 'ar' 
+    ? 'مرحباً! كيف يمكنني مساعدتك في مشروعك اليوم؟' 
+    : 'Hi! How can I help you with your project today?';
+  const inputPlaceholder = currentLang === 'ar' ? 'اكتب رسالتك هنا...' : 'Type your message...';
+  const onlineText = currentLang === 'ar' ? 'متصل' : 'Online';
+
+  chatWindow.innerHTML = `
+    <div class="ai-chat-header">
+      <div class="ai-header-info">
+        <div class="ai-avatar"></div>
+        <div>
+          <h4>Technical Assistant</h4>
+          <span class="ai-status"><span class="status-dot"></span> ${onlineText}</span>
+        </div>
+      </div>
+      <button class="ai-close-btn" aria-label="Close Chat">&times;</button>
+    </div>
+    <div class="ai-chat-body">
+      <div class="ai-msg ai-msg-bot">${welcomeMsg}</div>
+    </div>
+    <div class="ai-chat-footer">
+      <textarea placeholder="${inputPlaceholder}" id="aiChatInput"></textarea>
+      <button id="aiSendBtn" aria-label="Send Message">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  `;
+
+  // 3. Interactions
+  aiBtn.addEventListener('click', () => {
+    chatWindow.classList.add('active');
+    aiBtn.style.opacity = '0';
+    aiBtn.style.pointerEvents = 'none';
+  });
+
+  const closeBtn = chatWindow.querySelector('.ai-close-btn');
+  closeBtn.addEventListener('click', () => {
+    chatWindow.classList.remove('active');
+    aiBtn.style.opacity = '1';
+    aiBtn.style.pointerEvents = 'auto';
+  });
+
+  const sendBtn = chatWindow.querySelector('#aiSendBtn');
+  const input = chatWindow.querySelector('#aiChatInput');
+
+  const sendMessage = () => {
+    const text = input.value.trim();
+    if (!text) return;
+
+    const encodedMsg = encodeURIComponent(`[Technical Assistant Inquiry] ${text}`);
+    const waUrl = `https://wa.me/966563585190?text=${encodedMsg}`;
+    window.open(waUrl, '_blank');
+    
+    // Clear and close after sending
+    input.value = '';
+    chatWindow.classList.remove('active');
+    aiBtn.style.opacity = '1';
+    aiBtn.style.pointerEvents = 'auto';
+  };
+
+  sendBtn.addEventListener('click', sendMessage);
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  document.body.appendChild(aiBtn);
+  document.body.appendChild(chatWindow);
+}
+
+/* ══════════════════════════════
    LANGUAGE SETTINGS
-   Handles Persistent Language
 ══════════════════════════════ */
 function toggleLang() {
   currentLang = currentLang === 'en' ? 'ar' : 'en';
@@ -48,14 +145,12 @@ function applyLang() {
   elements.forEach(el => {
     const text = el.getAttribute(`data-${currentLang}`);
     if (text) {
-      // Check if element has child elements (like images/icons)
       const spanText = el.querySelector('.lang-text');
       if (spanText) {
         spanText.textContent = text;
       } else if (el.children.length === 0) {
         el.textContent = text;
       }
-      // No 'else' block here to prevent unsafe text node appending
     }
   });
 
@@ -248,40 +343,6 @@ function handleSubmit(e) {
 }
 
 /* ══════════════════════════════
-   SCROLL ANIMATIONS
-══════════════════════════════ */
-const animated = document.querySelectorAll('.product-card, .service-card, .value-card, .contact-card');
-
-const fadeObserver = new IntersectionObserver(entries => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      entry.target.style.animationDelay = `${(i % 4) * 80}ms`;
-      entry.target.classList.add('anim-in');
-      fadeObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
-animated.forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-  fadeObserver.observe(el);
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.anim-in').forEach(el => {
-    el.style.opacity = '';
-    el.style.transform = '';
-  });
-});
-
-// Inject style for anim-in class
-const style = document.createElement('style');
-style.textContent = `.anim-in { opacity: 1 !important; transform: none !important; }`;
-document.head.appendChild(style);
-
-/* ══════════════════════════════
    STATS COUNTER ANIMATION
 ══════════════════════════════ */
 function animateCounter(el, target, suffix) {
@@ -307,14 +368,12 @@ const statsObserver = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.3 });
 
-// Observe all triggers (Hero and About sections)
 document.querySelectorAll('.hero-stats, .stats-trigger').forEach(trigger => {
   statsObserver.observe(trigger);
 });
 
 /* ══════════════════════════════
    LOGO STAMP ANIMATION
-   Triggers a high-impact 'hit'
 ══════════════════════════════ */
 function initLogoStampAnimation() {
   const stamp = document.querySelector('.anim-stamp-trigger');
@@ -325,7 +384,7 @@ function initLogoStampAnimation() {
       if (entry.isIntersecting) {
         setTimeout(() => {
           stamp.classList.add('stamp-hit');
-        }, 300); // Slight delay for better visual anticipation
+        }, 300);
         observer.unobserve(entry.target);
       }
     });
@@ -347,4 +406,53 @@ function initFileInput() {
       fileNameLabel.textContent = name;
     });
   }
+}
+
+/* ══════════════════════════════
+   FLOATING WHATSAPP BUTTON
+══════════════════════════════ */
+function initWhatsApp() {
+  if (document.querySelector('.whatsapp-float')) return;
+
+  const path = window.location.pathname;
+  let brand = "";
+  if (path.includes('obo.html')) brand = "OBO";
+  else if (path.includes('extell.html')) brand = "Extell";
+  else if (path.includes('vmr.html')) brand = "VMR";
+  else if (path.includes('barqan.html')) brand = "Barqan";
+
+  const message = brand 
+    ? `Can I get ${brand} catalog and price list?`
+    : "Hello Alzab Algharbiyah, I have an inquiry regarding your services.";
+    
+  const encodedMsg = encodeURIComponent(message);
+  const waUrl = `https://wa.me/966563585190?text=${encodedMsg}`;
+  
+  const waBtn = document.createElement('a');
+  waBtn.href = waUrl;
+  waBtn.className = 'whatsapp-float';
+  waBtn.target = '_blank';
+  waBtn.rel = 'noopener noreferrer';
+  waBtn.setAttribute('aria-label', 'Chat on WhatsApp');
+  
+  const svgIcon = `
+    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+      <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.1-3.2-5.5-.3-8.5 2.4-11.2 2.5-2.4 5.5-6.4 8.3-9.6 2.8-3.2 3.7-5.5 5.5-9.3 1.9-3.7 1-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+    </svg>
+  `;
+
+  if (brand) {
+    const labelText = currentLang === 'ar' 
+      ? `هل يمكنني الحصول على كتالوج وقائمة أسعار ${brand}؟` 
+      : `Can I get ${brand} catalog and price list?`;
+    
+    waBtn.innerHTML = `
+      <span class="wa-float-label">${labelText}</span>
+      ${svgIcon}
+    `;
+  } else {
+    waBtn.innerHTML = svgIcon;
+  }
+  
+  document.body.appendChild(waBtn);
 }
