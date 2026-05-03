@@ -36,18 +36,23 @@ function initAIBuddy() {
   aiBtn.setAttribute('role', 'button');
   aiBtn.setAttribute('aria-label', 'Open Technical Assistant');
   
-  const labelText = currentLang === 'ar' ? 'المساعد الفني' : 'Technical Assistant';
-  aiBtn.innerHTML = `<span>${labelText}</span>`;
+  aiBtn.innerHTML = `<span data-en="Technical Assistant" data-ar="المساعد الفني">${currentLang === 'ar' ? 'المساعد الفني' : 'Technical Assistant'}</span>`;
 
   // 2. Create the Chat Window
   const chatWindow = document.createElement('div');
   chatWindow.className = 'ai-chat-window';
   
-  const welcomeMsg = currentLang === 'ar' 
-    ? 'مرحباً! كيف يمكنني مساعدتك في مشروعك اليوم؟' 
-    : 'Hi! How can I help you with your project today?';
-  const inputPlaceholder = currentLang === 'ar' ? 'اكتب رسالتك هنا...' : 'Type your message...';
-  const onlineText = currentLang === 'ar' ? 'متصل' : 'Online';
+  const welcomeMsgEn = 'Hi! How can I help you with your project today?';
+  const welcomeMsgAr = 'مرحباً! كيف يمكنني مساعدتك في مشروعك اليوم؟';
+  const welcomeMsg = currentLang === 'ar' ? welcomeMsgAr : welcomeMsgEn;
+
+  const inputPlaceholderEn = 'Type your message...';
+  const inputPlaceholderAr = 'اكتب رسالتك هنا...';
+  const inputPlaceholder = currentLang === 'ar' ? inputPlaceholderAr : inputPlaceholderEn;
+
+  const onlineTextEn = 'Online';
+  const onlineTextAr = 'متصل';
+  const onlineText = currentLang === 'ar' ? onlineTextAr : onlineTextEn;
 
   chatWindow.innerHTML = `
     <div class="ai-chat-header">
@@ -55,16 +60,16 @@ function initAIBuddy() {
         <div class="ai-avatar"></div>
         <div>
           <h4>Technical Assistant</h4>
-          <span class="ai-status"><span class="status-dot"></span> ${onlineText}</span>
+          <span class="ai-status" data-en="${onlineTextEn}" data-ar="${onlineTextAr}"><span class="status-dot"></span><span class="lang-text">${onlineText}</span></span>
         </div>
       </div>
       <button class="ai-close-btn" aria-label="Close Chat">&times;</button>
     </div>
     <div class="ai-chat-body">
-      <div class="ai-msg ai-msg-bot">${welcomeMsg}</div>
+      <div class="ai-msg ai-msg-bot" data-en="${welcomeMsgEn}" data-ar="${welcomeMsgAr}">${welcomeMsg}</div>
     </div>
     <div class="ai-chat-footer">
-      <textarea placeholder="${inputPlaceholder}" id="aiChatInput"></textarea>
+      <textarea placeholder="${inputPlaceholder}" id="aiChatInput" data-en-placeholder="${inputPlaceholderEn}" data-ar-placeholder="${inputPlaceholderAr}"></textarea>
       <button id="aiSendBtn" aria-label="Send Message">
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
@@ -442,12 +447,12 @@ function initWhatsApp() {
   `;
 
   if (brand) {
-    const labelText = currentLang === 'ar' 
-      ? `هل يمكنني الحصول على كتالوج وقائمة أسعار ${brand}؟` 
-      : `Can I get ${brand} catalog and price list?`;
+    const enText = `Can I get ${brand} catalog and price list?`;
+    const arText = `هل يمكنني الحصول على كتالوج وقائمة أسعار ${brand}؟`;
+    const labelText = currentLang === 'ar' ? arText : enText;
     
     waBtn.innerHTML = `
-      <span class="wa-float-label">${labelText}</span>
+      <span class="wa-float-label" data-en="${enText}" data-ar="${arText}">${labelText}</span>
       ${svgIcon}
     `;
   } else {
