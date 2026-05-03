@@ -2147,5 +2147,21 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
   fill: currentColor;
 }
 
+.verified-about-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-primary);
+  color: #062e12;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+}
+
 
 
