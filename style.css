@@ -1797,8 +1797,8 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
   position: fixed;
   bottom: 105px; /* Above WhatsApp (30px bottom + 60px height + 15px gap) */
   right: 30px; /* Aligned with WhatsApp */
-  height: 65px;
-  padding: 0 30px;
+  height: 48px;
+  padding: 0 20px;
   background: var(--gold-primary);
   color: #062e12;
   border-radius: 50px;
@@ -1820,7 +1820,7 @@ section { padding: 4rem 0; position: relative; overflow: hidden; }
 }
 
 .ai-buddy-float-pill span {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .whatsapp-float:hover {
